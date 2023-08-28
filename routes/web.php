@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Mail\TestMail;
+use App\Http\Controllers\SendSms;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +31,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::get('/send', function () {
+    Mail::to('ibrataha8@gmail.com')->send(new TestMail());
+
+    return response("sending test mail");
+});
+
+Route::get("send-sms", [SendSms::class, 'send']);
+
+require __DIR__ . '/auth.php';
